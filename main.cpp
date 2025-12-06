@@ -133,7 +133,7 @@ bool dfs(int r, int c,
     }
 
     // wall/already visited
-    if (maze[r][c] ==1 && !visited[r][c]) {
+    if (maze[r][c] ==1 || visited[r][c]) {
         return false;
     }
 
@@ -146,15 +146,15 @@ bool dfs(int r, int c,
     }
 
     // checking neighbors
-    for (int i=0; i<4; i++) { // to 4 because 4 directions
-        int nr = r + dc[i];
-        int nc = c + dc[i];
+    for (int k=0; k<4; k++) { // to 4 because 4 directions
+        int nr = r + dr[k];
+        int nc = c + dc[k];
 
         // check if we can go that way
         if (nr < 0 || nr >= N || nc < 0 || nc >= M) {
             continue; // skip out of bounds
         }
-        if (maze[nr][nc] ==1 || visited[nr][nc]) {
+        if (maze[nr][nc] == 1 || visited[nr][nc]) {
             continue; // skip visited
         }
 
@@ -207,16 +207,10 @@ int main() {
     vector<vector<int>> parent_r(N, vector<int>(M, -1));
     vector<vector<int>> parent_c(N, vector<int>(M, -1));
 
-    // ------------------------------------------------------
-    // STUDENT WORK:
     // Call your DFS, track visited, and fill parent_r and parent_c
-    // ------------------------------------------------------
     bool found = dfs(ent_r, ent_c, maze, visited, parent_r, parent_c, exit_r, exit_c);
 
-    // ------------------------------------------------------
-    // STUDENT WORK:
     // If found, print the path
-    // ------------------------------------------------------
     if (found) {
         printPath(exitcell, parent_r, parent_c, ent_r, ent_c);
     } else {
